@@ -8,11 +8,13 @@ import datetime
 import time
 import sys
 import sqlite3
-import StringIO
+import io.StringIO
 import glob
 import traceback
 
 # Celery config
+from django.utils import importlib
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sforgcompare.settings')
 app = Celery('tasks', broker=os.environ.get('REDIS_URL', 'redis://localhost'))
 
@@ -34,7 +36,7 @@ from django.template import RequestContext, Context, Template, loader
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 
-reload(sys)
+importlib.reload(sys)
 sys.setdefaultencoding("utf-8")
 
 # Downloading metadata using the Metadata API

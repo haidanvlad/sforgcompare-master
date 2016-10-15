@@ -1,22 +1,21 @@
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext, Context, Template, loader
-from django.http import HttpResponse, HttpResponseRedirect
-from django.conf import settings
-from compareorgs.models import Job, Org, ComponentType, Component, ComponentListUnique, OfflineFileJob
-from compareorgs.forms import JobForm
-import json	
-import requests
 import datetime
-import uuid
-from time import sleep
-from compareorgs.tasks import download_metadata_metadata, download_metadata_tooling, create_offline_file
-import sys
-import sqlite3
+import json
 import os
-from zipfile import ZipFile
-import StringIO
+import sys
+import uuid
 
-reload(sys)
+import requests
+from django.conf import settings
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
+from django.utils import importlib
+
+from compareorgs.forms import JobForm
+from compareorgs.models import Job, Org, Component, ComponentListUnique, OfflineFileJob
+from compareorgs.tasks import download_metadata_metadata, download_metadata_tooling, create_offline_file
+
+importlib.reload(sys)
 sys.setdefaultencoding("utf-8")
 
 def index(request):
